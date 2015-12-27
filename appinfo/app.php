@@ -22,8 +22,8 @@
 <?php
 //load the required files
 
-OCP\Util::addscript('ipv6', 'ipv6');
+OCP\Util::addscript('ocipv6', 'ocipv6');
 
-\OCP\App::registerAdmin('ipv6', 'settings/admin');
+\OCP\App::registerAdmin('ocipv6', 'settings/admin');
 
 ?>

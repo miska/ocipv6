@@ -1,6 +1,6 @@
 <?xml version="1.0"?> 
 <info>
-	<id>ipv6</id>
+	<id>ocipv6</id>
 	<name>IPv6</name>
 	<description>Simple IPv6 overview/setup for admin.</description>
 	<licence>AGPL</licence>

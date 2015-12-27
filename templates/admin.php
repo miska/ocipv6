@@ -1,10 +1,27 @@
 <?php
+
 /**
- * ownCloud - IPv6
+ * @author Michal Hrusecky <michal@hrusecky.net>
+ *
+ * @copyright Copyright (c) 2015, Michal Hrusecky
+ * @license AGPL-3.0
+ *
+ * This code is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU Affero General Public License, version 3,
+ * as published by the Free Software Foundation.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU Affero General Public License for more details.
+ *
+ * You should have received a copy of the GNU Affero General Public License, version 3,
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>
  *
  */
+
 ?>
-<form id="ipv6" class="section">
+<form id="ocipv6" class="section">
     <h2>IPv6</h2>
     <p>
         <span class="info"><?php print ($l->t ('IPv6 allows you to access your ownCloud instance from anywhere in the world (where IPv6 is available).')); ?></span>
