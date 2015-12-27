@@ -8,8 +8,8 @@ IPv6 if he doesn't have one yet.
 Instalation
 -----------
 
-# Install +miredo-client+
-# Checkout into your ownClouds apps directory
-# Copy 'ocipv6.sudo' file into your '/etc/sudoers.d'
-# Enable app in ownCloud
-# Go to _Admin_ section of your ownCloud
+. Install +miredo-client+
+. Checkout into your ownClouds apps directory
+. Copy 'ocipv6.sudo' file into your '/etc/sudoers.d'
+. Enable app in ownCloud
+. Go to _Admin_ section of your ownCloud
