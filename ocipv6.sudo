@@ -1,0 +1,5 @@
+%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl status -n 0 miredo-client
+%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl start miredo-client
+%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop miredo-client
+%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable miredo-client
+%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl disable miredo-client

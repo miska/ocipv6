@@ -1,0 +1,15 @@
+OCIPv6
+======
+
+This is small and simple application for ownCloud. It sole purpose is to show
+admin available public IPv6 addresses and let him enable/disable Teredo to get
+IPv6 if he doesn't have one yet.
+
+Instalation
+-----------
+
+# Install +miredo-client+
+# Checkout into your ownClouds apps directory
+# Copy 'ocipv6.sudo' file into your '/etc/sudoers.d'
+# Enable app in ownCloud
+# Go to _Admin_ section of your ownCloud
