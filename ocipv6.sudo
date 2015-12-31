@@ -1,5 +1,9 @@
-%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl status -n 0 miredo-client
-%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl start miredo-client
-%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop miredo-client
-%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable miredo-client
-%www ALL=(ALL) NOPASSWD: /usr/bin/systemctl disable miredo-client
+# Users known to be used to run webserver
+User_Alias WEB_USERS = %www,%apache,www-data,apache2
+
+# Working with miredo
+WEB_USERS ALL=(ALL) NOPASSWD: /usr/bin/systemctl status -n 0 miredo-client,/bin/systemctl status -n 0 miredo-client
+WEB_USERS ALL=(ALL) NOPASSWD: /usr/bin/systemctl start miredo-client,/bin/systemctl start miredo-client
+WEB_USERS ALL=(ALL) NOPASSWD: /usr/bin/systemctl stop miredo-client,/bin/systemctl stop miredo-client
+WEB_USERS ALL=(ALL) NOPASSWD: /usr/bin/systemctl enable miredo-client,/bin/systemctl enable miredo-client
+WEB_USERS ALL=(ALL) NOPASSWD: /usr/bin/systemctl disable miredo-client,/bin/systemctl disable miredo-client
