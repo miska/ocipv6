@@ -38,7 +38,6 @@ class AdminController extends Controller {
 
       /**
        * @AdminRequired
-       * @NoCSRFRequired
        */
       public function GetTeredo () {
             \OCP\JSON::setContentTypeHeader ('application/json');
@@ -54,7 +53,6 @@ class AdminController extends Controller {
 
       /**
        * @AdminRequired
-       * @NoCSRFRequired
        */
       public function EnableTeredo () {
           system("sudo systemctl enable miredo-client");
@@ -65,7 +63,6 @@ class AdminController extends Controller {
 
        /**
        * @AdminRequired
-       * @NoCSRFRequired
        */
       public function DisableTeredo () {
           system("sudo systemctl disable miredo-client");
@@ -76,7 +73,6 @@ class AdminController extends Controller {
      
       /**
        * @NoAdminRequired
-       * @NoCSRFRequired
        */
       public function GetIPv6 () {
           \OCP\JSON::setContentTypeHeader ('application/json');
