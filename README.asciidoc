@@ -11,5 +11,7 @@ Instalation
 . Install +miredo-client+
 . Checkout into your ownClouds apps directory
 . Copy 'ocipv6.sudo' file into your '/etc/sudoers.d'
+.. If your distribution is not supported out of the box, you might need to
+   adjust it
 . Enable app in ownCloud
 . Go to _Admin_ section of your ownCloud
