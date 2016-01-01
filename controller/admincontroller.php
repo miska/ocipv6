@@ -59,9 +59,13 @@ class AdminController extends Controller {
           $app = new Application();
           $c = $app->getContainer();
           $as = $c->query('OCA\OCIPv6\Service\AuthorService');
+          $oldhost = $as->getAppValue('hostname');
+          $tdomain = $as->getSystemValue('trusted_domains');
+          $tdomain = array_values(array_diff($tdomain, array($oldhost)));
+          $tdomain[] = $hostname;
+          $as->setSystemValue('trusted_domains', $tdomain);
           $as->setAppValue('hostname', $hostname);
           $as->setAppValue('token', $token);
-          $as->setAppValue('last_ip', 'refresh');
           return $this->GetDynv6();
       }
 
