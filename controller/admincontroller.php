@@ -26,6 +26,9 @@ use OCP\AppFramework\Http\JSONResponse;
 use OCP\Config;
 use OCP\IL10N;
 use OCP\IRequest;
+use \OCA\ocipv6\AppInfo\Application;
+use \OCA\ocipv6\Service\AuthorService;
+
 
 class AdminController extends Controller {
       private $L10N;
@@ -35,6 +38,33 @@ class AdminController extends Controller {
 
           $this->L10N = $L10N;
       }
+
+      /**
+       * @AdminRequired
+       */
+      public function GetDynv6() {
+          \OCP\JSON::setContentTypeHeader ('application/json');
+          $app = new Application();
+          $c = $app->getContainer();
+          $as = $c->query('OCA\OCIPv6\Service\AuthorService');
+          $hostname = $as->getAppValue('hostname');
+          $token = $as->getAppValue('token');
+          return new JSONResponse(Array('token' => $token, 'hostname' => $hostname));
+      }
+
+      /**
+       * @AdminRequired
+       */
+      public function SetDynv6($hostname, $token) {
+          $app = new Application();
+          $c = $app->getContainer();
+          $as = $c->query('OCA\OCIPv6\Service\AuthorService');
+          $as->setAppValue('hostname', $hostname);
+          $as->setAppValue('token', $token);
+          $as->setAppValue('last_ip', 'refresh');
+          return $this->GetDynv6();
+      }
+
 
       /**
        * @AdminRequired

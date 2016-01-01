@@ -20,10 +20,41 @@
  */
 ?>
 <?php
+namespace OCA\OCIPv6\AppInfo;
+
 //load the required files
 
-OCP\Util::addscript('ocipv6', 'ocipv6');
+\OCP\Util::addscript('ocipv6', 'ocipv6');
+
+\OCP\Backgroundjob::addRegularTask('\OCA\ocipv6\Cron\dyndns', 'update');
 
 \OCP\App::registerAdmin('ocipv6', 'settings/admin');
+
+use \OCP\AppFramework\App;
+
+use \OCA\OCIPv6\Service\AuthorService;
+
+class Application extends App {
+
+    public function __construct(array $urlParams=array()){
+        parent::__construct('ocipv6', $urlParams);
+
+        $container = $this->getContainer();
+
+        /**
+         * Controllers
+         */
+        $container->registerService('AuthorService', function($c) {
+            return new AuthorService(
+                $c->query('Config'),
+                $c->query('OCIPv6')
+            );
+        });
+
+        $container->registerService('Config', function($c) {
+            return $c->query('ServerContainer')->getConfig();
+        });
+    }
+}
 
 ?>

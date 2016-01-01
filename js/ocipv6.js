@@ -18,6 +18,33 @@
  *
  */
 
+function refresh_dynv6() {
+    var baseUrl = OC.generateUrl('/apps/ocipv6');
+    $.ajax({
+        url: baseUrl + '/dynv6',
+        type: 'GET',
+        contentType: 'application/json',
+    }).done(function (response) {
+		$('#Dynv6Hostname').val(response.hostname);
+		$('#Dynv6Token').val(response.token);
+    });
+}
+
+function save_dynv6() {
+    var baseUrl = OC.generateUrl('/apps/ocipv6');
+    var my_post = { hostname: $('#Dynv6Hostname').val(),
+                    token: $('#Dynv6Token').val() };
+    $.ajax({
+        url: baseUrl + '/dynv6',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(my_post)
+    }).done(function (response) {
+		$('#Dynv6Hostname').val(response.hostname);
+		$('#Dynv6Token').val(response.token);
+    });
+}
+
 function refresh_ipv6() {
     var baseUrl = OC.generateUrl('/apps/ocipv6');
     $.ajax({
@@ -88,4 +115,6 @@ $(document).ready(function() {
     $('#TeredoEnable').on('change', function() {
         update_teredo($(this).prop("checked"));
     });
+    refresh_dynv6();
+    $('#Dynv6Save').click(function() { save_dynv6(); });
 });

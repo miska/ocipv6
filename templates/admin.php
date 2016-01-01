@@ -40,4 +40,15 @@
         <input type="checkbox" name="enable_teredo" id="TeredoEnable" class="checkbox" />
         <label for="TeredoEnable">Allow box to get IPv6 via Teredo</label><br/>
     </p>
+    <h3>Dynv6</h3>
+    <p>
+		<span class="info"><a href="http://dynv6.com">Dynv6</a> is one of the dynamic dns services that can assign your cloud nice domain name that will get updated with your IP (including IPv6) everytime it changes.</span>
+    </p>
+    <p>
+		<label for="Dynv6Hostname">Hostname</label>
+		<input type="text" name="dynv6_hostname" id="Dynv6Hostname"/>
+		<label for="Dynv6Token">Token</label>
+		<input type="text" name="dynv6_token" id="Dynv6Token"/>
+		<input type="button" name="dynv6_save" id="Dynv6Save" value="Save"/>
+    </p>
 </form>
