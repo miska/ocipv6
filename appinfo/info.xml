@@ -1,8 +1,8 @@
 <?xml version="1.0"?> 
 <info>
 	<id>ocipv6</id>
-	<name>IPv6</name>
-	<description>Simple IPv6 overview/setup for admin.</description>
+	<name>OC IPv6</name>
+	<description>Simple IPv6 overview/setup utility for admin.</description>
 	<licence>AGPL</licence>
 	<author>Michal Hrusecky</author>
 	<requiremin>8.2</requiremin>
