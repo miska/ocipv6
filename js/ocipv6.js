@@ -19,6 +19,7 @@
  */
 
 function refresh_dynv6() {
+    $('#dynv6-loading').show();
     var baseUrl = OC.generateUrl('/apps/ocipv6');
     $.ajax({
         url: baseUrl + '/dynv6',
@@ -27,10 +28,12 @@ function refresh_dynv6() {
     }).done(function (response) {
 		$('#Dynv6Hostname').val(response.hostname);
 		$('#Dynv6Token').val(response.token);
+        $('#dynv6-loading').hide();
     });
 }
 
 function save_dynv6() {
+    $('#dynv6-loading').show();
     var baseUrl = OC.generateUrl('/apps/ocipv6');
     var my_post = { hostname: $('#Dynv6Hostname').val(),
                     token: $('#Dynv6Token').val() };
@@ -42,11 +45,14 @@ function save_dynv6() {
     }).done(function (response) {
 		$('#Dynv6Hostname').val(response.hostname);
 		$('#Dynv6Token').val(response.token);
+        $('#dynv6-loading').hide();
     });
 }
 
 function refresh_ipv6() {
     var baseUrl = OC.generateUrl('/apps/ocipv6');
+    $('#ipv6-loading').show();
+    $('#ipv6addresses').html('');
     $.ajax({
         url: baseUrl + '/ipv6',
         type: 'GET',
@@ -66,11 +72,13 @@ function refresh_ipv6() {
         } else {
             text = '<p>No IPv6 adressses found.</p>';
         }
+        $('#ipv6-loading').hide();
         $('#ipv6addresses').html(text);
     });
 }
 
 function update_teredo(val) {
+    $('#teredo-loading').show();
     var baseUrl = OC.generateUrl('/apps/ocipv6');
     $('#TeredoEnable').prop("disabled", true);
     if(val) {
@@ -82,6 +90,7 @@ function update_teredo(val) {
             $('#TeredoEnable').prop("checked", response.enabled);
             $('#TeredoEnable').prop("disabled", false);
             refresh_ipv6();
+            $('#teredo-loading').hide();
         });
     } else {
         $.ajax({
@@ -92,12 +101,14 @@ function update_teredo(val) {
             $('#TeredoEnable').prop("checked", response.enabled);
             $('#TeredoEnable').prop("disabled", false);
             refresh_ipv6();
+            $('#teredo-loading').hide();
         });
     }
 }
 
 function check_teredo() {
     var baseUrl = OC.generateUrl('/apps/ocipv6');
+    $('#teredo-loading').show();
     $('#TeredoEnable').prop("disabled", true);
     $.ajax({
         url: baseUrl + '/teredo',
@@ -106,6 +117,7 @@ function check_teredo() {
     }).done(function (response) {
         $('#TeredoEnable').prop("checked", response.enabled);
         $('#TeredoEnable').prop("disabled", false);
+        $('#teredo-loading').hide();
     });
 }
 
