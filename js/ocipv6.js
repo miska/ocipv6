@@ -49,6 +49,72 @@ function save_dynv6() {
     });
 }
 
+function set_upnp(ip_val) {
+    var baseUrl = OC.generateUrl('/apps/ocipv6');
+    var my_post = { ip: ip_val };
+    $('#ipv4-loading').show();
+    $('#ipv4addresses').html('');
+    $('#routerip-loading').show();
+    $('#routerip').html('');
+    $.ajax({
+        url: baseUrl + '/upnp',
+        type: 'POST',
+        contentType: 'application/json',
+        data: JSON.stringify(my_post)
+    }).done(function (response) {
+        refresh_upnp();
+    });
+}
+
+function refresh_upnp() {
+    var baseUrl = OC.generateUrl('/apps/ocipv6');
+    $('#ipv4-loading').show();
+    $('#ipv4addresses').html('');
+    $('#routerip-loading').show();
+    $('#routerip').html('');
+    $.ajax({
+        url: baseUrl + '/upnp',
+        type: 'GET',
+        contentType: 'application/json',
+    }).done(function (response) {
+        var text = '';
+        if(response.ext_ip.length > 0) {
+            text = 'Your routers address is <span class="ip-address">' + response.ext_ip + '</span>. ';
+            if(response.dest_ip.length > 0) {
+                text += 'It is forwarded to <class="ip-address">' + response.dest_ip + '</span>.';
+            } else {
+                text += 'It is not forwarded to anywhere.';
+            }
+            $('#routerip').html(text);
+        } else {
+            $('#routerip').html("Can't detect router IP, do you have uPnP enabled?");
+        }
+        $('#routerip-loading').hide();
+        text = '';
+        if(response.ipv4.length > 0) {
+            text = '<ul class="ip-address">\n';
+            response.ipv4.forEach(function(callback, arg) {
+                text += '<li><a href="'
+                     + document.location.protocol
+                     + '//' + response.ipv4[arg] + ''
+                     + '/">' 
+                     + response.ipv4[arg]
+                     + '</a> '
+                     + '<a href="#" class="upnp_setter" data-ip="'
+                     + ((response.ipv4[arg] !=  response.dest_ip) ? response.ipv4[arg] : '')
+                     + '">'
+                     + ((response.ipv4[arg] !=  response.dest_ip) ? 'Forward here' : 'Stop forwarding')
+                     + '</a> ' + '</li>' + '\n';
+            });
+            text+= '</ul>';
+        } else {
+            text = '<p>No IPv4 adressses found.</p>';
+        }
+        $('#ipv4-loading').hide();
+        $('#ipv4addresses').html(text);
+    });
+}
+
 function refresh_ipv6() {
     var baseUrl = OC.generateUrl('/apps/ocipv6');
     $('#ipv6-loading').show();
@@ -123,6 +189,10 @@ function check_teredo() {
 
 $(document).ready(function() {
     refresh_ipv6();
+    refresh_upnp();
+    $('#ipv4addresses').on('click', '.upnp_setter', function() {
+        set_upnp($(this).data("ip"));
+    });
     check_teredo();
     $('#TeredoEnable').on('change', function() {
         update_teredo($(this).prop("checked"));

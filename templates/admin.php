@@ -22,18 +22,28 @@
 
 ?>
 <form id="ocipv6" class="section">
-    <h2>IPv6</h2>
+    <h2>IP</h2>
+    <h3>uPnP</h3>
+    <h4>Local addresses</h4>
+    <p id="ipv4addresses">
+        <div id="ipv4-loading" class="icon-loading-small inlineblock"></div>
+    </p>
+    <h4>Routers address</h4>
+    <p id="routerip">
+        <div id="routerip-loading" class="icon-loading-small inlineblock"></div>
+    </p>
+    <h3>IPv6</h3>
     <p>
         <span class="info"><?php print ($l->t ('IPv6 allows you to access your ownCloud instance from anywhere in the world (where IPv6 is available).')); ?></span>
     </p>
-    <h3>Available adresses</h3>
+    <h4>Available addresses</h4>
     <p>
         <span class="info"><?php print ($l->t ('Here you can find list of your IPv6 addresses if you have any. Those can be used to reach your ownCloud from internet. If you don\'t have one, you can enable Teredo to get one.')); ?></span>
     </p>
     <p id="ipv6addresses">
         <div id="ipv6-loading" class="icon-loading-small inlineblock"></div>
     </p>
-    <h3>Teredo</h3>
+    <h4>Teredo</h4>
     <p>
         <span class="info"><?php print ($l->t ('Teredo is one of the simplest way to obtain IPv6 address. This address can change.')); ?></span>
     </p>

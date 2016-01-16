@@ -3,12 +3,13 @@ OCIPv6
 
 This is small and simple application for ownCloud. It sole purpose is to show
 admin available public IPv6 addresses and let him enable/disable Teredo to get
-IPv6 if he doesn't have one yet.
+IPv6 if he doesn't have one yet. It also handles Dynv6 dynamic DNS service
+updates and can help you do IPv4 forwarding using uPnP.
 
 Instalation
 -----------
 
-. Install +miredo-client+
+. Install +miredo-client+ and +miniupnpc+
 . Checkout into your ownClouds apps directory
 . Copy 'ocipv6.sudo' file into your '/etc/sudoers.d'
 .. If your distribution is not supported out of the box, you might need to

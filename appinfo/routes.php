@@ -24,6 +24,8 @@ return ['routes' => [
     ['name' => 'admin#GetIPv6', 'url' => '/ipv6', 'verb' => 'GET'],
     ['name' => 'admin#GetDynv6', 'url' => '/dynv6', 'verb' => 'GET'],
     ['name' => 'admin#SetDynv6', 'url' => '/dynv6', 'verb' => 'POST'],
+    ['name' => 'admin#GetuPnP', 'url' => '/upnp', 'verb' => 'GET'],
+    ['name' => 'admin#SetuPnP', 'url' => '/upnp', 'verb' => 'POST'],
     ['name' => 'admin#EnableTeredo', 'url' => '/enable_teredo', 'verb' => 'POST'],
     ['name' => 'admin#DisableTeredo', 'url' => '/disable_teredo', 'verb' => 'POST'],
     ['name' => 'admin#GetTeredo', 'url' => '/teredo', 'verb' => 'GET'],

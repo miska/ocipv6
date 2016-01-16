@@ -73,7 +73,7 @@ class AdminController extends Controller {
       /**
        * @AdminRequired
        */
-      public function GetTeredo () {
+      public function GetTeredo() {
             \OCP\JSON::setContentTypeHeader ('application/json');
 
             exec("sudo systemctl status -n 0 miredo-client", $output, $ret);
@@ -88,7 +88,7 @@ class AdminController extends Controller {
       /**
        * @AdminRequired
        */
-      public function EnableTeredo () {
+      public function EnableTeredo() {
           system("sudo systemctl enable miredo-client");
           system("sudo systemctl start miredo-client");
 
@@ -98,7 +98,7 @@ class AdminController extends Controller {
        /**
        * @AdminRequired
        */
-      public function DisableTeredo () {
+      public function DisableTeredo() {
           system("sudo systemctl disable miredo-client");
           system("sudo systemctl stop miredo-client");
 
@@ -108,11 +108,10 @@ class AdminController extends Controller {
       /**
        * @NoAdminRequired
        */
-      public function GetIPv6 () {
+      public function GetIPv6() {
           \OCP\JSON::setContentTypeHeader ('application/json');
 
-          # exec("ip -6 a s | sed -n 's|.*inet6\ \([23][0-9a-f:]*\)/[0-9]*\ scope\ global.*|\1|p'", $output, $ret);
-          exec("ip -6 a s", $output, $ret);
+          exec("ip -6 a s scope global", $output, $ret);
           $ipv6 = [];
           foreach($output as $i) {
               if(preg_match('/inet6 ([23][0-9a-f\:]+)/', $i, $match)) {
@@ -121,5 +120,46 @@ class AdminController extends Controller {
           }
 
           return new JSONResponse (Array ('ipv6' => $ipv6));
+      }
+
+      /**
+       * @NoAdminRequired
+       */
+      public function GetuPnP() {
+          \OCP\JSON::setContentTypeHeader ('application/json');
+
+          exec("upnpc -l", $output, $ret);
+          $extip = "";
+          $intip = "";
+          foreach($output as $i) {
+              if(preg_match('/ExternalIPAddress = ([0-9.]+)/', $i, $match)) {
+                  $extip = $match[1];
+              }
+              if(preg_match('/.*TCP[[:blank:]]*443->([0-9.]+):443/', $i, $match)) {
+                  $intip = $match[1];
+              }
+          }
+          exec("ip a s scope global", $output, $ret);
+          $ipv4 = [];
+          foreach($output as $i) {
+              if(preg_match('/inet ([0-9.]+)/', $i, $match)) {
+                  $ipv4[] = $match[1];
+              }
+          }
+
+          return new JSONResponse (Array ('ext_ip' => $extip, 'dest_ip' => $intip, 'ipv4' => $ipv4));
+      }
+
+      /**
+       * @AdminRequired
+       */
+      public function SetuPnP($ip) {
+          \OCP\JSON::setContentTypeHeader ('application/json');
+
+          exec("upnpc -d 443 TCP", $output, $ret);
+          if(preg_match('/^[0-9.]+$/', $ip)) {
+              exec("upnpc -a $ip 443 443 TCP", $output, $ret);
+          }
+          return new JSONResponse (Array ('result' => $ret));
       }
 }
