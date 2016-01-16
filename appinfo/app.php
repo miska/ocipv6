@@ -28,7 +28,9 @@ namespace OCA\OCIPv6\AppInfo;
 
 \OCP\Backgroundjob::addRegularTask('\OCA\ocipv6\Cron\dyndns', 'update');
 
-\OCP\App::registerAdmin('ocipv6', 'settings/admin');
+\OCP\App::registerAdmin('ocipv6', 'settings/ipv6');
+\OCP\App::registerAdmin('ocipv6', 'settings/upnp');
+\OCP\App::registerAdmin('ocipv6', 'settings/dynv6');
 
 use \OCP\AppFramework\App;
 
