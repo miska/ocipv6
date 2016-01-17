@@ -24,8 +24,6 @@ namespace OCA\OCIPv6\AppInfo;
 
 //load the required files
 
-\OCP\Util::addscript('ocipv6', 'ocipv6');
-
 \OCP\Backgroundjob::addRegularTask('\OCA\ocipv6\Cron\dyndns', 'update');
 
 \OCP\App::registerAdmin('ocipv6', 'settings/ipv6');
