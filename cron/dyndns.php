@@ -40,6 +40,19 @@ class DynDNS {
                 curl_close($ch);
             }
         }
+        $upnp = $as->getAppValue('upnp');
+        if(preg_match('/^[0-9.]+$/', $upnp)) {
+            exec("upnpc -l", $output, $ret);
+            $intip = "";
+            foreach($output as $i) {
+                if(preg_match('/.*TCP[[:blank:]]*443->([0-9.]+):443/', $i, $match)) {
+                    $intip = $match[1];
+                }
+            }
+            if($intip != $upnp) {
+                exec("upnpc -d 443 TCP", $output, $ret);
+                exec("upnpc -a $upnp 443 443 TCP", $output, $ret);
+            }
+        }
     }
-
 }

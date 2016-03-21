@@ -156,9 +156,15 @@ class AdminController extends Controller {
       public function SetuPnP($ip) {
           \OCP\JSON::setContentTypeHeader ('application/json');
 
+          $app = new Application();
+          $c = $app->getContainer();
+          $as = $c->query('OCA\OCIPv6\Service\AuthorService');
           exec("upnpc -d 443 TCP", $output, $ret);
           if(preg_match('/^[0-9.]+$/', $ip)) {
               exec("upnpc -a $ip 443 443 TCP", $output, $ret);
+              $as->setAppValue('upnp', $ip);
+          } else {
+              $as->setAppValue('upnp', '');
           }
           return new JSONResponse (Array ('result' => $ret));
       }
