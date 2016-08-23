@@ -1,10 +1,13 @@
 OCIPv6
 ======
 
-This is small and simple application for ownCloud. It sole purpose is to show the
-admin the available public IPv6 addresses and let him enable/disable Teredo to get
-IPv6 if he doesn't have one yet. It also handles Dynv6 dynamic DNS service
-updates and can help you do IPv4 forwarding using uPnP.
+This is small and simple application for ownCloud. It sole purpose is to show
+the admin the available public IPv6 addresses and let him enable/disable Teredo
+to get IPv6 if he doesn't have one yet. It also handles Dynv6 dynamic DNS
+service updates and can help you do IPv4 forwarding using uPnP. With uPnP it
+tries to setup forwarding on port 443 which is default https port and if it
+fails, it will try to do same on port 4443 as some routers doesn't allow
+forwarding on https port.
 
 Installation
 ------------
