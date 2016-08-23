@@ -50,7 +50,23 @@ function refresh_upnp() {
         if(response.ext_ip.length > 0) {
             text = 'Your routers address is <span class="ip-address">' + response.ext_ip + '</span>. ';
             if(response.dest_ip.length > 0) {
-                text += 'It is forwarded to <class="ip-address">' + response.dest_ip + '</span>.';
+                text += 'It is forwarded to <class="ip-address">' + response.dest_ip + '</span>';
+                if((response.dest_port.length > 0) && (response.dest_port != '443')) {
+                    text += ' and port <class="ip-address">' + response.dest_port + '</span>';
+                }
+                var pub_url = 'https://' + response.ext_ip;
+                if(response.dest_port != '443') {
+                    pub_url += ':' + response.dest_port + '/';
+                }
+                text += '. Thus this url should work: <a href="' + pub_url + '/">' + pub_url + '</a> .';
+                if('443' != response.dest_port) {
+                    text += '<br/>WARNING: You are forwarding port ' + response.dest_port + ' to your cloud.';
+                    text += " This is not a standard https port. Probably your router can't forward https one.";
+                    text += ' Make sure that your cloud is listening on this port as well.';
+                }
+                if(location.port != response.dest_port) {
+                    text += '<br/>WARNING: You are accessing your cloud on port differing from forwarding destination.';
+                }
             } else {
                 text += 'It is not forwarded to anywhere.';
             }

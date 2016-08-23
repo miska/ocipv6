@@ -131,11 +131,15 @@ class AdminController extends Controller {
           exec("upnpc -l", $output, $ret);
           $extip = "";
           $intip = "";
+          $app = new Application();
+          $c = $app->getContainer();
+          $as = $c->query('OCA\OCIPv6\Service\AuthorService');
+          $intport = $as->getAppValue('upnp_port');
           foreach($output as $i) {
               if(preg_match('/ExternalIPAddress = ([0-9.]+)/', $i, $match)) {
                   $extip = $match[1];
               }
-              if(preg_match('/.*TCP[[:blank:]]*443->([0-9.]+):443/', $i, $match)) {
+              if(preg_match('/.*TCP[[:blank:]]*' . $intport . '->([0-9.]+):' . $intport . '/', $i, $match)) {
                   $intip = $match[1];
               }
           }
@@ -147,7 +151,7 @@ class AdminController extends Controller {
               }
           }
 
-          return new JSONResponse (Array ('ext_ip' => $extip, 'dest_ip' => $intip, 'ipv4' => $ipv4));
+          return new JSONResponse (Array ('ext_ip' => $extip, 'dest_ip' => $intip, 'dest_port' => $intport, 'ipv4' => $ipv4));
       }
 
       /**
@@ -160,12 +164,22 @@ class AdminController extends Controller {
           $c = $app->getContainer();
           $as = $c->query('OCA\OCIPv6\Service\AuthorService');
           exec("upnpc -d 443 TCP", $output, $ret);
+          $port = $as->getAppValue('upnp_port');
+          exec("upnpc -d $port TCP", $output, $ret);
           if(preg_match('/^[0-9.]+$/', $ip)) {
               exec("upnpc -a $ip 443 443 TCP", $output, $ret);
-              $as->setAppValue('upnp', $ip);
-          } else {
-              $as->setAppValue('upnp', '');
+              if($ret != 0 || !preg_match('/:443 TCP is redirected to internal/', array_pop($output), $match)) {
+                  exec("upnpc -a $ip 4443 4443 TCP", $output, $ret);
+                  $port = 4443;
+              }
+              if($ret == 0) {
+                  $as->setAppValue('upnp', $ip);
+                  $as->setAppValue('upnp_port', $port);
+                  return new JSONResponse (Array ('result' => $ret));
+              }
           }
+          $as->setAppValue('upnp', '');
+          $as->setAppValue('upnp_port', '443');
           return new JSONResponse (Array ('result' => $ret));
       }
 }

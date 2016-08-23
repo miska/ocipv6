@@ -41,6 +41,7 @@ class DynDNS {
             }
         }
         $upnp = $as->getAppValue('upnp');
+        $port = $as->getAppValue('upnp_port');
         if(preg_match('/^[0-9.]+$/', $upnp)) {
             exec("upnpc -l", $output, $ret);
             $intip = "";
@@ -51,7 +52,8 @@ class DynDNS {
             }
             if($intip != $upnp) {
                 exec("upnpc -d 443 TCP", $output, $ret);
-                exec("upnpc -a $upnp 443 443 TCP", $output, $ret);
+                exec("upnpc -d $port TCP", $output, $ret);
+                exec("upnpc -a $upnp $port $port TCP", $output, $ret);
             }
         }
     }

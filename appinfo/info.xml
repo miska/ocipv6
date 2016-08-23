@@ -2,7 +2,7 @@
 <info>
 	<id>ocipv6</id>
 	<name>OC IPv6</name>
-	<description>Simple IPv6 overview/setup utility for admin.</description>
+	<description>Simple IPv6 and UPnP overview/setup utility for admin interface.</description>
 	<licence>AGPL</licence>
 	<author>Michal Hrusecky</author>
 	<requiremin>8.2</requiremin>
